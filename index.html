@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hussnain ❤️ Kashif</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', cursive;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(12px);
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+}
+
+h1 { font-size: 36px; margin-bottom:10px; }
+#typing { font-size: 18px; margin: 10px 0 20px; min-height: 40px; }
+button { padding: 12px 28px; font-size: 18px; border: none; border-radius: 50px; margin: 10px; cursor: pointer; transition: all 0.05s; }
+#yes { background: #ff3e6c; color: white; }
+#no { background: #333; color: white; position: fixed; transition: all 0.05s; }
+#catBox { display: none; margin-top: 15px; }
+#catBox img { width: 140px; }
+#result { display: none; font-size: 24px; text-align:center; }
+.hearts { position: fixed; width: 100%; height: 100%; pointer-events: none; }
+.heart { position: absolute; font-size: 24px; animation: fall linear; }
+@keyframes fall { 0% { transform: translateY(-10%); } 100% { transform: translateY(110vh); } }
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<div class="container">
+    <h1>Kashif 💖 Do you love me?</h1>
+    <div id="typing"></div>
+    <div id="buttons">
+        <button id="yes">Yes 💕</button>
+        <button id="no">No 😢</button>
+    </div>
+    <div id="catBox">
+        <img id="catImg" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
+        <p>🐱 Please say yes 🥺💖</p>
+    </div>
+    <div id="result">
+        💖 Thank you Kashif 💖<br><br>
+        I love you more than you ❤️<br><br>
+        – Hussnain 💖<br><br>
+        <img src="https://media.giphy.com/media/3oEduSbSGpGaRX2Vri/giphy.gif" width="200">
+    </div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script>
+// Music play after first click
+const music = document.getElementById("music");
+document.body.addEventListener("click", ()=>{ music.play(); }, { once:true });
+
+// Typing effect
+const text = "Kashif... you are very special to me 💖";
+let i=0;
+function typing() {
+    if(i<text.length){
+        document.getElementById("typing").innerHTML += text[i];
+        i++;
+        setTimeout(typing,50);
+    }
+}
+typing();
+
+// Elements
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const catBox = document.getElementById("catBox");
+const catImg = document.getElementById("catImg");
+const result = document.getElementById("result");
+const buttons = document.getElementById("buttons");
+
+// 10 cat GIFs
+const catGIFs = [
+    "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+    "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+    "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",
+    "https://media.giphy.com/media/12PA1eI8FBqEBa/giphy.gif",
+    "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+    "https://media.giphy.com/media/5xaOcLGvzHxDKjufnLW/giphy.gif",
+    "https://media.giphy.com/media/l0HlvtIPzPdt2usKs/giphy.gif",
+    "https://media.giphy.com/media/6uGhT1O4sxpi8/giphy.gif",
+    "https://media.giphy.com/media/OmK8lulOMQ9XO/giphy.gif",
+    "https://media.giphy.com/media/3oriO7A7bt1wsEP4cw/giphy.gif"
+];
+
+// Move NO button inside screen and update cat GIF, also shrink No / enlarge Yes
+function moveNo() {
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
+
+    const maxX = window.innerWidth - btnWidth - 10;
+    const maxY = window.innerHeight - btnHeight - 10;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    // Show cat box
+    catBox.style.display = "block";
+
+    // Random cat GIF
+    const randomIndex = Math.floor(Math.random() * catGIFs.length);
+    catImg.src = catGIFs[randomIndex];
+
+    // Shrink NO button slightly
+    noBtn.style.transform = "scale(0.8)";
+
+    // Enlarge YES button slightly
+    yesBtn.style.transform = "scale(1.2)";
+}
+
+// Reset buttons back on mouse leave
+function resetButtons() {
+    noBtn.style.transform = "scale(1)";
+    yesBtn.style.transform = "scale(1)";
+}
+
+// Events
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("mouseout", resetButtons);
+noBtn.addEventListener("touchstart", (e)=>{
+    e.preventDefault();
+    moveNo();
+    setTimeout(resetButtons, 800); // reset after 0.8s on mobile
+});
+
+// YES click
+yesBtn.addEventListener("click", ()=>{
+    buttons.style.display="none";
+    catBox.style.display="none";
+    result.style.display="block";
+    startHearts();
+});
+
+// Hearts animation
+function startHearts(){
+    const hearts = document.getElementById("hearts");
+    setInterval(()=>{
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText="💖";
+        heart.style.left = Math.random()*100+"vw";
+        heart.style.animationDuration = (Math.random()*3 + 2)+"s";
+        hearts.appendChild(heart);
+        setTimeout(()=>heart.remove(),5000);
+    },150);
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
